@@ -11,9 +11,9 @@
 /* Exercício 1: Criar uma transição para quando o mouse estiver em cima dos
  * botões play/stop (para que o elemento se revele lentamente)
  */
- #controles ul {
-
- }
+#controles ul {
+  transition: all 200ms ease-out;
+}
 
 /*
  * Exercício 2: Você deve implementar uma metáfora visual para cada um dos 4
@@ -23,18 +23,101 @@
  *   - com-raiva: animal fica pulsando
  *   - atacando: animal dá um salto e cresce, com uma borda vermelha
  */
-.com-fome {
+:root {
+  --vibracao: 2px
+}
+ 
+#conteudo * {
+  box-sizing: border-box;
+}
 
+.com-fome {
+  animation: fome 250ms ease-in-out 0ms infinite alternate,
+              vibrar 200ms ease-out 0ms infinite alternate;
+}
+
+@keyframes fome {
+  from {
+    border: initial solid rgba(255,255,255,0);
+    opacity: 1;
+  } to {
+    border: 10px solid orange;
+    opacity: 0.5;
+  }
+}
+
+@keyframes vibrar {
+  0% {
+    transform: translate(calc(-1 * var(--vibracao)), calc(-1 * var(--vibracao)));
+  }
+  33% {
+    transform: translate(var(--vibracao), var(--vibracao));
+  }
+  66% {
+    transform: translate(calc(-1 * var(--vibracao)), var(--vibracao));
+  }
+  100% {
+    transform: translate(var(--vibracao), calc(-1 * var(--vibracao)));
+  }
 }
 
 .satisfeito {
+  animation: satisfacao 500ms ease-in-out 0ms 2 alternate,
+              barrel-roll 1000ms ease-out 0ms 1;
+}
 
+@keyframes satisfacao {
+  from {
+    border: 2px solid rgba(255,255,255,0);
+    opacity: 1;
+  } to {
+    border: 10px solid greenyellow;
+    opacity: 0.5;
+  }
+}
+
+@keyframes barrel-roll {
+  from {
+    transform: rotateZ(0deg);
+  } to {
+    transform: rotateZ(calc(3 * 360deg));
+  }
 }
 
 .com-raiva {
+  animation: raiva 100ms ease-in-out 0ms 4 alternate;
+}
 
+@keyframes raiva {
+  from {
+    transform: scale(1,1);
+    border: 2px solid yellow;
+  } to {
+    border: 10px solid yellow;
+    transform: scale(1.5, 1.5);
+  }
 }
 
 .atacando {
+  animation: ataque 500ms ease-out 0ms 1 alternate;
+}
 
+@keyframes ataque {
+  0% {
+    border: 10px solid red;
+    transform: scale(1,1);
+  }
+  33% {
+    transform: scale(0.8,2.8);
+  }
+  66% {
+    transform: scale(2.8,0.4);
+  }
+  95% {
+    transform: scale(0.8,2.8);
+  }
+  100% {
+    border: 10px solid red;
+    transform: scale(1,1);
+  }
 }
